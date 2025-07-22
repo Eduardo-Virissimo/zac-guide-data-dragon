@@ -6,6 +6,7 @@ const champions = [
   "gangplank",
   "teemo",
   "tryndamere"
+//pegar dinamicamente
 ];
 
 export default function HomePage() {
