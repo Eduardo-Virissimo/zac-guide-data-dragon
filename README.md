@@ -1,12 +1,45 @@
-# React + Vite
+# Zac Guide - React + Vite + TailwindCSS
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Este é o projeto **Zac Guide**, um guia interativo para o campeão Zac em League of Legends, feito com React, Vite e TailwindCSS.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Scripts disponíveis
 
-## Expanding the ESLint configuration
+| Comando        | Descrição                                                        |
+| -------------- | ---------------------------------------------------------------- |
+| `npm run dev`  | Inicia o servidor de desenvolvimento local (modo dev)           |
+| `npm run build`| Gera a build otimizada para produção na pasta `dist`             |
+| `npm run deploy` | Publica a build no GitHub Pages (envia a pasta `dist` para `gh-pages`) |
+| `npm run explain` | Mostra uma explicação passo a passo dos comandos para deploy    |
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Publicando no GitHub Pages
+
+O projeto está configurado para publicar automaticamente no GitHub Pages usando o pacote [`gh-pages`](https://www.npmjs.com/package/gh-pages).
+
+### Fluxo para atualizar o site:
+
+1. Faça suas alterações no código-fonte local.
+2. Rode `npm run build` para criar a build de produção.
+3. Rode `npm run deploy` para enviar a build para o GitHub Pages.
+4. Acesse seu site em:  
+   `https://eduardo-virissimo.github.io/zac-guide-data-dragon/`
+
+---
+
+## Dependências principais
+
+- React 19.x
+- Vite 7.x
+- TailwindCSS 4.x
+- framer-motion, react-icons, gsap e outras libs para animação e UI
+
+---
+
+## Como iniciar o projeto localmente
+
+```bash
+npm install
+npm run dev
