@@ -9,7 +9,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://eduardo-virissimo.github.io/zac-guide-data-dragon/",
+  "homepage": "https://0x527975.github.io/zac-guide-data-dragon/",
   "dependencies": {
     "@tailwindcss/vite": "^4.1.11",
     "gsap": "^3.13.0",
