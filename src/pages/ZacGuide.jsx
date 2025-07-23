@@ -9,6 +9,7 @@ import ItemsDisplay from "../components/ItemsDisplay";
 import ChampionInfo from "../components/ChampionInfo";
 import SpellDisplay from "../components/SpellDisplay";
 import TextPressure from "../blocks/TextAnimations/TextPressure/TextPressure";
+import Aurora from "../blocks/Backgrounds/Aurora/Aurora";
 import { getZacData } from "../data/zacData";
 
 export default function ZacGuide() {
@@ -41,24 +42,19 @@ export default function ZacGuide() {
       animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
       exit={{ opacity: 0, scale: 0.98, filter: "blur(8px)" }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className="min-h-screen bg-zinc-950 text-white px-4 py-8"
+      className="relative min-h-screen bg-zinc-950 text-white px-4 py-8 overflow-hidden"
     >
-      <div className="max-w-5xl mx-auto flex flex-col gap-12">
-        <div className="w-full max-w-4xl h-[200px] mx-auto flex items-center justify-center mb-12">
-          <TextPressure
-            text="Mono Zac Guide"
-            flex
-            alpha={false}
-            stroke={false}
-            width
-            weight
-            italic
-            textColor="#34d399"
-            strokeColor="#000000"
-            minFontSize={36}
-          />
-        </div>
+      {/* Aurora como background */}
+      <div className="absolute inset-0 -z-10">
+        <Aurora
+          colorStops={["#6AE899", "#56FF95", "#7DFABE"]}
+          blend={0.5}
+          amplitude={1.0}
+          speed={0.5}
+        />
+      </div>
 
+      <div className="max-w-5xl mx-auto flex flex-col gap-12">
         <LaneSelector
           lanes={lanes}
           selectedLane={selectedLane}
@@ -92,7 +88,10 @@ export default function ZacGuide() {
             </section>
 
             <section className="p-6 bg-zinc-800 rounded-lg shadow-md border border-emerald-600 text-center">
-              <ChampionInfo championName={matchupData.championName} description={matchupData.description} />
+              <ChampionInfo
+                championName={matchupData.championName}
+                description={matchupData.description}
+              />
             </section>
           </div>
         ) : (
