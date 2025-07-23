@@ -3,7 +3,10 @@ export default function RuneDisplay({ runes }) {
 
   const renderRunes = (runesArray) =>
     runesArray.map(({ name, icon }) => (
-      <div key={name} className="flex flex-col items-center p-2 rounded-lg border border-transparent hover:border-emerald-500 transition">
+      <div
+        key={name}
+        className="flex flex-col items-center p-2 rounded-lg border border-transparent hover:border-emerald-500 transition"
+      >
         <img src={icon} alt={name} className="w-12 h-12" />
         <span className="mt-1 text-sm text-center">{name}</span>
       </div>
