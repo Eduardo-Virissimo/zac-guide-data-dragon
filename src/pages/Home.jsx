@@ -1,9 +1,17 @@
-// src/Home.jsx
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import TextPressure from "../blocks/TextAnimations/TextPressure/TextPressure";
-import { FaGithub, FaTwitch } from "react-icons/fa";
+import { FaGithub, FaTwitch, FaSignInAlt } from "react-icons/fa";
+import eaeAudio from "../assets/sounds/eae.mp3";
 
 export default function Home({ onStart }) {
+  const audioRef = useRef(new Audio(eaeAudio));
+
+  const handleStart = () => {
+    audioRef.current.play();
+    onStart();
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.98, filter: "blur(8px)" }}
@@ -28,21 +36,23 @@ export default function Home({ onStart }) {
         />
       </div>
 
-      {/* Botão começar */}
+      {/* Botão entrar */}
       <motion.button
         whileHover={{ scale: 1.07, boxShadow: "0 0 15px #34d399" }}
         whileTap={{ scale: 0.95 }}
         transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        onClick={onStart}
+        onClick={handleStart}
         className="bg-emerald-500 rounded-full px-10 py-3 text-xl font-semibold shadow-lg
           hover:bg-gradient-to-r hover:from-emerald-400 hover:to-green-600 text-white
           focus:outline-none focus:ring-4 focus:ring-emerald-300/60
           select-none
           transition-all duration-300 ease-in-out
           mb-12
-          "
+          flex items-center gap-3
+        "
       >
-        Começar
+        Entrar
+        <FaSignInAlt size={20} />
       </motion.button>
 
       {/* Botões GitHub + Twitch */}
