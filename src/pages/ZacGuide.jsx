@@ -10,6 +10,8 @@ import ChampionInfo from "../components/ChampionInfo";
 import SpellDisplay from "../components/SpellDisplay";
 import TextPressure from "../blocks/TextAnimations/TextPressure/TextPressure";
 import Aurora from "../blocks/Backgrounds/Aurora/Aurora";
+import SummonerSpellsDisplay from "../components/SummonerSpellsDisplay";
+
 import { getZacData } from "../data/zacData";
 
 export default function ZacGuide() {
@@ -83,6 +85,7 @@ export default function ZacGuide() {
                 <ItemsDisplay items={matchupData.items} />
               </div>
               <div className="md:flex-1 mt-8 md:mt-0">
+                <SummonerSpellsDisplay summonerSpells={matchupData.summonerSpells} />
                 <SpellDisplay spells={matchupData.spells} skillOrder={matchupData.skillOrder} />
               </div>
             </section>
