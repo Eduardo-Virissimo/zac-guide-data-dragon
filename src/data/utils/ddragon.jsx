@@ -1,4 +1,11 @@
-// utils/ddragon.js
+// Importa os shards direto da pasta assets
+import shard5007 from '../../assets/shards/5007.png';
+import shard5008 from '../../assets/shards/5008.png';
+import shard5010 from '../../assets/shards/5010.png';
+import shard5001 from '../../assets/shards/5001.png';
+import shard5011 from '../../assets/shards/5011.png';
+import shard5013 from '../../assets/shards/5013.png';
+
 let cachedVersion = null;
 
 export async function getLatestVersion() {
@@ -28,37 +35,84 @@ export function getRuneIcon(style, rune, useFolder = true) {
   }
 }
 
+// Champion Spells
 
-const spellsCache = {};
-export async function getSpellIcons(championName) {
+const champSpellCache = {};
+
+export async function getChampionSpells(championName) {
   const version = await getLatestVersion();
-  if (spellsCache[championName]) return spellsCache[championName];
+  if (champSpellCache[championName]) return champSpellCache[championName];
 
   const res = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion/${championName}.json`);
   const data = await res.json();
   const spells = data.data[championName].spells;
 
   const result = spells.map(spell => ({
-    id: spell.id, // ex: "ZedQ"
+    id: spell.id,
     icon: `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spell.id}.png`
   }));
 
-  spellsCache[championName] = result;
+  champSpellCache[championName] = result;
   return result;
 }
 
-export function getShardIcon(type) {
-  const map = {
-    "attackspeed": "StatModsAttackSpeedIcon.png",
-    "adaptive": "StatModsAdaptiveForceIcon.png",
-    "cdr": "StatModsCDRScalingIcon.png",
-    "armor": "StatModsArmorIcon.png",
-    "mr": "StatModsMagicResIcon.png",
-    "health": "StatModsHealthScalingIcon.png"
-  };
+// Summoner Spells
 
-  const file = map[type.toLowerCase()];
-  if (!file) return null;
+let summonerSpellsCache = null;
 
-  return `https://ddragon.leagueoflegends.com/cdn/img/perk-images/StatMods/${file}`;
+export async function getSpellsIcons() {
+  if (summonerSpellsCache) return summonerSpellsCache;
+
+  const version = await getLatestVersion();
+  const res = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/summoner.json`);
+  const data = await res.json();
+
+  const spells = Object.values(data.data).map(spell => ({
+    id: spell.id,
+    name: spell.name,
+    description: spell.description,
+    icon: `https://ddragon.leagueoflegends.com/cdn/${version}/img/spell/${spell.image.full}`
+  }));
+
+  summonerSpellsCache = spells;
+  return spells;
+}
+
+export async function getSummonerSpellsByName(...names) {
+  const allSpells = await getSpellsIcons();
+
+  const normalizedNames = names.map(n =>
+    n.toLowerCase().replace(/\s+/g, '')
+  );
+
+  const resultMap = new Map();
+
+  for (const spell of allSpells) {
+    const spellNameNormalized = spell.name.toLowerCase().replace(/\s+/g, '');
+    const spellIdNormalized = spell.id.toLowerCase().replace(/\s+/g, '');
+
+    if (
+      normalizedNames.includes(spellNameNormalized) ||
+      normalizedNames.includes(spellIdNormalized)
+    ) {
+      resultMap.set(spell.id, spell);
+    }
+  }
+
+  return Array.from(resultMap.values()).slice(0, 2);
+}
+
+const shardMap = {
+  adaptativeforce: shard5008,
+  movespeed: shard5010,
+  attackspeed: shard5007,
+  healthscaling: shard5001,
+  health: shard5011,
+  tenacity: shard5013,
+  cdr: shard5007,
+};
+
+export function getShardIcon(name) {
+  const normalized = name.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '');
+  return shardMap[normalized] || null;
 }

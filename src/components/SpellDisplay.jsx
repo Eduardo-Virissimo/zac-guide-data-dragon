@@ -1,17 +1,20 @@
 export default function SpellDisplay({ spells, skillOrder }) {
   if (!spells || !skillOrder) return null;
 
+  const labels = ["Q", "W", "E", "R"];
+
   return (
     <div>
       <h2 className="text-2xl font-bold text-emerald-300 mb-4">Spells & Ordem de Habilidades</h2>
 
       <div className="flex justify-center gap-6 flex-wrap mb-6">
         {spells.map(({ name, icon }, index) => {
-          const safeName = name || `spell-${index}`;
+          const label = labels[index] || `Skill ${index}`;
+          const safeName = name || `Skill - ${label}`;
           return (
-            <div key={`${safeName}-${index}`} className="flex flex-col items-center">
+            <div key={label} className="flex flex-col items-center">
               <img src={icon} alt={safeName} className="w-14 h-14" />
-              <span className="text-sm mt-1">{safeName}</span>
+              <span className="text-sm mt-1">{label}</span>
             </div>
           );
         })}

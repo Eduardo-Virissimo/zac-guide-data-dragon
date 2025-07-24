@@ -1,14 +1,15 @@
-// data/zacData.js
 import {
   getChampionIcon,
   getItemIcon,
   getRuneIcon,
-  getSpellIcons,
+  getChampionSpells,
+  getSpellsIcons,
+  getSummonerSpellsByName,
   getShardIcon
 } from './utils/ddragon';
 
 export async function getZacData() {
-  const zacSpells = await getSpellIcons("Zac");
+  const zacSpells = await getChampionSpells("Zac");
 
   return {
     top: {
@@ -18,32 +19,34 @@ export async function getZacData() {
           championIcon: await getChampionIcon("darius"),
           difficulty: "Difícil",
           runes: {
-            primaryTree: "Precisão",
+            primaryTree: "Precision",
             primaryRunes: [
-              { name: "Conquistador", icon: getRuneIcon("Precision", "Conqueror") },
-              { name: "Triunfo", icon: getRuneIcon("Precision", "Triumph", false) },
-              { name: "Condicionamento", icon: getRuneIcon("Resolve", "Conditioning") },
-              { name: "Crescimento Excessivo", icon: getRuneIcon("Resolve", "Overgrowth") }
+              { name: "", icon: getRuneIcon("Precision", "Conqueror") },
+              { name: "", icon: getRuneIcon("Precision", "Triumph", false) },
+              { name: "", icon: getRuneIcon("Precision", "LegendHaste") },
+              { name: "", icon: getRuneIcon("Sorcery", "LastStand") }
             ],
-            secondaryTree: "Determinação",
+            secondaryTree: "Resolve",
             secondaryRunes: [
-              { name: "Triunfo", icon: getRuneIcon("Precision", "Triumph") },
-              { name: "Golpe de Misericórdia", icon: getRuneIcon("Precision", "CoupDeGrace") }
+              { name: "", icon: getRuneIcon("Resolve", "BonePlating") },
+              { name: "", icon: getRuneIcon("Resolve", "Revitalize") }
             ],
             shards: [
-              { name: "Velocidade de Ataque", icon: getShardIcon("attackspeed") },
-              { name: "Armadura", icon: getShardIcon("armor") },
-              { name: "Resistência Mágica", icon: getShardIcon("mr") }
+              { name: "Velocidade de Ataque", icon: await getShardIcon("cdr") },
+              { name: "Armadura", icon: await getShardIcon("healthscaling") },
+              { name: "Resistência Mágica", icon: await getShardIcon("health") }
             ]
+
           },
           items: [
-            { name: "Heartsteel", icon: await getItemIcon(3084) },
-            { name: "Gargoyle Stoneplate", icon: await getItemIcon(3193) },
-            { name: "Dead Man's Plate", icon: await getItemIcon(3742) }
+            { name: "", icon: await getItemIcon(223047) },
+            { name: "", icon: await getItemIcon(3076) },
+            { name: "", icon: await getItemIcon(323075) }
           ],
           spells: zacSpells,
-          skillOrder: ["W", "Q", "E", "W", "W", "R", "W", "E", "W", "E", "R", "E", "E", "Q", "Q", "R", "Q", "Q"],
-          description: "Build tank com foco em sustain e troca curta."
+          summonerSpells: await getSummonerSpellsByName("Flash", "Ignite"),
+          skillOrder: ["Comece de Q e maximize na ordem", "W", "E", "Q"],
+          description: "Darius é uma matchup difícil. No nível 1, evite levar dano dele, mesmo que perca alguns minions, mas tente pegar experiência. Farmar perto da sua torre é mais seguro. Se ele avançar, use seu Q na wave e bata nele, tente dar um certo dano e ganhar dele no sustain. Evite acumular muitos stacks da passiva do Darius e, se trocar dano, corra em direção a ele para desviar da ponta do machado, que cura ele. Priorize armadura, começando com colete espinhoso."
         }
       }
     },
@@ -62,15 +65,15 @@ export async function getZacData() {
               { name: "Coleção de Olhos", icon: getRuneIcon("Domination", "EyeballCollection") },
               { name: "Caçador Voraz", icon: getRuneIcon("Domination", "RavenousHunter") }
             ],
-            secondaryTree: "Precisão",
+            secondaryTree: "Precision",
             secondaryRunes: [
               { name: "Triunfo", icon: getRuneIcon("Precision", "Triumph") },
               { name: "Golpe de Misericórdia", icon: getRuneIcon("Precision", "CoupDeGrace") }
             ],
             shards: [
-              { name: "Velocidade de Ataque", icon: "/assets/shards/attackspeed.png" },
-              { name: "Armadura", icon: "/assets/shards/armor.png" },
-              { name: "Resistência Mágica", icon: "/assets/shards/mr.png" }
+              { name: "Velocidade de Ataque", icon: await getShardIcon("attackspeed") },
+              { name: "Armadura", icon: await getShardIcon("armor") },
+              { name: "Resistência Mágica", icon: await getShardIcon("mr") }
             ]
           },
           items: [
@@ -79,6 +82,7 @@ export async function getZacData() {
             { name: "Edge of Night", icon: await getItemIcon(3814) }
           ],
           spells: zacSpells,
+          summonerSpells: await getSummonerSpellsByName("Ignite", "Flash"),
           skillOrder: ["Q", "W", "E", "Q", "Q", "R", "Q", "W", "Q", "W", "R", "E", "E", "W", "E", "R", "E", "E"],
           description:
             "Contra Zed, abuse do seu poder de burst com Electrocute e mobilidade. Foque em evitar os shurikens dele e aproveite oportunidades para contra-atacar."
