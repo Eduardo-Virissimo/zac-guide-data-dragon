@@ -5,19 +5,19 @@ export default function ItemsDisplay({ items }) {
     <div>
       <h2 className="text-2xl font-bold text-emerald-300 mb-4">Itens Recomendados</h2>
       <div className="flex gap-6 flex-wrap justify-center">
-        {items.map(({ name, icon }) => (
+        {items.map(({ name, icon }, index) => (
           <div
-            key={name}
+            key={name || `item-${index}`}
             className="flex flex-col items-center transition hover:scale-105"
           >
             <div className="w-14 h-14 rounded-lg border border-emerald-600 overflow-hidden shadow-md bg-zinc-900 flex items-center justify-center">
               <img
                 src={icon}
-                alt={name}
+                alt={name || `Item ${index + 1}`}
                 className="w-full h-full object-cover rounded-lg"
               />
             </div>
-            <span className="mt-1 text-sm">{name}</span>
+            <span className="mt-1 text-sm">{name || `Item ${index + 1}`}</span>
           </div>
         ))}
       </div>

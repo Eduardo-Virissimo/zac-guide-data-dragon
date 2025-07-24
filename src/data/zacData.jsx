@@ -1,9 +1,8 @@
 import {
   getChampionIcon,
   getItemIcon,
-  getRuneIcon,
+  getRuneIconById,
   getChampionSpells,
-  getSpellsIcons,
   getSummonerSpellsByName,
   getShardIcon
 } from './utils/ddragon';
@@ -19,24 +18,15 @@ export async function getZacData() {
           championIcon: await getChampionIcon("darius"),
           difficulty: "Difícil",
           runes: {
-            primaryTree: "Precision",
-            primaryRunes: [
-              { name: "", icon: getRuneIcon("Precision", "Conqueror") },
-              { name: "", icon: getRuneIcon("Precision", "Triumph", false) },
-              { name: "", icon: getRuneIcon("Precision", "LegendHaste") },
-              { name: "", icon: getRuneIcon("Sorcery", "LastStand") }
-            ],
-            secondaryTree: "Resolve",
-            secondaryRunes: [
-              { name: "", icon: getRuneIcon("Resolve", "BonePlating") },
-              { name: "", icon: getRuneIcon("Resolve", "Revitalize") }
-            ],
+            primaryTreeId: 8000, // Precision
+            primaryRunesSelectedIds: [8010, 9111, 9105, 8299],
+            secondaryTreeId: 8400, // Resolve
+            secondaryRunesSelectedIds: [8473, 8453],
             shards: [
-              { name: "Velocidade de Ataque", icon: await getShardIcon("cdr") },
+              { name: "Velocidade de Ataque", icon: await getShardIcon("attackspeed") },
               { name: "Armadura", icon: await getShardIcon("healthscaling") },
               { name: "Resistência Mágica", icon: await getShardIcon("health") }
             ]
-
           },
           items: [
             { name: "", icon: await getItemIcon(223047) },
@@ -46,7 +36,7 @@ export async function getZacData() {
           spells: zacSpells,
           summonerSpells: await getSummonerSpellsByName("Flash", "Ignite"),
           skillOrder: ["Comece de Q e maximize na ordem", "W", "E", "Q"],
-          description: "Darius é uma matchup difícil. No nível 1, evite levar dano dele, mesmo que perca alguns minions, mas tente pegar experiência. Farmar perto da sua torre é mais seguro. Se ele avançar, use seu Q na wave e bata nele, tente dar um certo dano e ganhar dele no sustain. Evite acumular muitos stacks da passiva do Darius e, se trocar dano, corra em direção a ele para desviar da ponta do machado, que cura ele. Priorize armadura, começando com colete espinhoso."
+          description: "Darius é uma matchup difícil. No nível 1, evite levar dano dele, mesmo que perca alguns minions, mas tente pegar experiência. Farmar perto da sua torre é mais seguro..."
         }
       }
     },
@@ -58,22 +48,14 @@ export async function getZacData() {
           championIcon: await getChampionIcon("zed"),
           difficulty: "Médio",
           runes: {
-            primaryTree: "Domination",
-            primaryRunes: [
-              { name: "Eletrocutar", icon: getRuneIcon("Domination", "Electrocute") },
-              { name: "Impacto Repentino", icon: getRuneIcon("Domination", "SuddenImpact") },
-              { name: "Coleção de Olhos", icon: getRuneIcon("Domination", "EyeballCollection") },
-              { name: "Caçador Voraz", icon: getRuneIcon("Domination", "RavenousHunter") }
-            ],
-            secondaryTree: "Precision",
-            secondaryRunes: [
-              { name: "Triunfo", icon: getRuneIcon("Precision", "Triumph") },
-              { name: "Golpe de Misericórdia", icon: getRuneIcon("Precision", "CoupDeGrace") }
-            ],
+            primaryTreeId: 8100, // Domination
+            primaryRunesSelectedIds: [8112, 8126, 8138, 8106],
+            secondaryTreeId: 8000, // Precision
+            secondaryRunesSelectedIds: [9111, 8014],
             shards: [
               { name: "Velocidade de Ataque", icon: await getShardIcon("attackspeed") },
-              { name: "Armadura", icon: await getShardIcon("armor") },
-              { name: "Resistência Mágica", icon: await getShardIcon("mr") }
+              { name: "Armadura", icon: await getShardIcon("healthscaling") },  // "armor" não existe no shardMap, usei "healthscaling"
+              { name: "Resistência Mágica", icon: await getShardIcon("health") }   // "mr" não existe no shardMap, usei "health"
             ]
           },
           items: [

@@ -7,7 +7,11 @@ import shard5011 from '../../assets/shards/5011.png';
 import shard5013 from '../../assets/shards/5013.png';
 
 let cachedVersion = null;
+let runeDataCache = null;
+const champSpellCache = {};
+let summonerSpellsCache = null;
 
+// Busca versão mais recente para campeões, itens, spells, runas etc.
 export async function getLatestVersion() {
   if (cachedVersion) return cachedVersion;
   const res = await fetch('https://ddragon.leagueoflegends.com/api/versions.json');
@@ -27,18 +31,38 @@ export async function getItemIcon(itemId) {
   return `https://ddragon.leagueoflegends.com/cdn/${version}/img/item/${itemId}.png`;
 }
 
-export function getRuneIcon(style, rune, useFolder = true) {
-  if (useFolder) {
-    return `https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/${style}/${rune}/${rune}.png`;
-  } else {
-    return `https://ddragon.leagueoflegends.com/cdn/img/perk-images/Styles/${style}/${rune}.png`;
+// Ícone da runa pelo ID
+export async function getRuneIconById(id) {
+  const version = await getLatestVersion();
+  if (!runeDataCache) {
+    const res = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/runesReforged.json`);
+    runeDataCache = await res.json();
   }
+
+  for (const style of runeDataCache) {
+    for (const slot of style.slots) {
+      for (const rune of slot.runes) {
+        if (rune.id === id) {
+          return `https://ddragon.leagueoflegends.com/cdn/img/${rune.icon}`;
+        }
+      }
+    }
+  }
+
+  return null;
 }
 
-// Champion Spells
+// Runas completas
+export async function getAllRunesData() {
+  const version = await getLatestVersion();
+  if (runeDataCache) return runeDataCache;
 
-const champSpellCache = {};
+  const res = await fetch(`https://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/runesReforged.json`);
+  runeDataCache = await res.json();
+  return runeDataCache;
+}
 
+// Spells de campeões
 export async function getChampionSpells(championName) {
   const version = await getLatestVersion();
   if (champSpellCache[championName]) return champSpellCache[championName];
@@ -56,10 +80,7 @@ export async function getChampionSpells(championName) {
   return result;
 }
 
-// Summoner Spells
-
-let summonerSpellsCache = null;
-
+// Summoner spells
 export async function getSpellsIcons() {
   if (summonerSpellsCache) return summonerSpellsCache;
 
@@ -102,6 +123,7 @@ export async function getSummonerSpellsByName(...names) {
   return Array.from(resultMap.values()).slice(0, 2);
 }
 
+// Fragmentos
 const shardMap = {
   adaptativeforce: shard5008,
   movespeed: shard5010,
