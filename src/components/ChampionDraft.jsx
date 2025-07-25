@@ -65,18 +65,18 @@ export default function Campeoes() {
     return (
         <div className="min-h-screen w-full bg-[#0A1428] text-[#C8AA6E] font-sans flex">
             {/* LADO ESQUERDO */}
-            <div className="flex-[1.5] p-6 flex flex-col items-center justify-center gap-6">
-                <h1 className="text-center text-2xl text-[#F0E6D2] uppercase tracking-widest font-semibold">
+            <div className="flex-[1.5] p-4 md:p-6 flex flex-col gap-6 w-full max-w-full">
+                <h1 className="text-center text-2xl md:text-3xl text-[#F0E6D2] uppercase tracking-widest font-semibold">
                     SELECIONE O SEU CAMPEÃO!
                 </h1>
 
                 <div className="flex flex-col items-center my-4">
                     <span
-                        className={`text-4xl font-bold ${counter === 0
-                            ? "animate-pulse text-[#F0E6D2]"
-                            : counter <= 5
-                                ? "animate-pulse text-[#FF4444]"
-                                : "text-[#C8AA6E]"
+                        className={`text-4xl md:text-5xl font-bold ${counter === 0
+                                ? "animate-pulse text-[#F0E6D2]"
+                                : counter <= 5
+                                    ? "animate-pulse text-[#FF4444]"
+                                    : "text-[#C8AA6E]"
                             }`}
                     >
                         {counter}
@@ -89,14 +89,16 @@ export default function Campeoes() {
                     </div>
                 </div>
 
-                <div className="flex flex-grow min-h-[600px] p-4 bg-[#091428cc] rounded-lg items-stretch">
-                    {/* Sua Equipe */}
-                    <div className="w-56 flex flex-col items-center text-lg">
+                {/* Container que agrupa Equipe, Centro e Inimigos */}
+                <div className="flex flex-col md:flex-row gap-6 w-full min-h-[600px] bg-[#091428cc] rounded-lg p-4 overflow-hidden">
+
+                    {/* SUA EQUIPE */}
+                    <div className="w-full md:w-56 flex flex-col items-center text-lg flex-shrink-0 overflow-auto max-h-[280px] md:max-h-none">
                         <h3 className="text-[#F0E6D2] text-base uppercase mb-3">Sua Equipe</h3>
                         {[...Array(5)].map((_, i) => (
                             <div
                                 key={i}
-                                className="flex items-center w-full my-3 p-3 rounded relative border-t border-[#C8AA6E]/50"
+                                className="flex items-center w-full my-2 p-3 rounded relative border-t border-[#C8AA6E]/50"
                             >
                                 <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#785A28] mr-3 flex items-center justify-center bg-[#1E2328]">
                                     {i === 0 && (
@@ -112,11 +114,11 @@ export default function Campeoes() {
                         ))}
                     </div>
 
-                    {/* CENTRO */}
-                    <div className="w-[640px]  flex flex-col items-center mx-6">
-                        <div className="flex justify-between items-center flex-wrap gap-4 mb-5 w-full">
-                            {/* Lane Selector - ocupa o máximo possível */}
-                            <div className="flex flex-wrap gap-2 flex-1 min-w-[200px]">
+                    {/* CENTRO (Lane Selector, Busca e Grid) */}
+                    <div className="flex-1 flex flex-col items-center min-w-0">
+                        <div className="flex flex-wrap justify-between items-center w-full gap-4 mb-5">
+                            {/* Lane Selector */}
+                            <div className="flex flex-wrap gap-2 flex-1 min-w-[150px]">
                                 <LaneSelector
                                     lanes={lanes}
                                     selectedLane={selectedLane}
@@ -126,8 +128,8 @@ export default function Campeoes() {
                                 />
                             </div>
 
-                            {/* Busca - tamanho fixo e alinhado à direita */}
-                            <div className="relative w-[220px]">
+                            {/* Busca */}
+                            <div className="relative w-full max-w-[220px]">
                                 <input
                                     type="text"
                                     placeholder="Buscar"
@@ -154,11 +156,10 @@ export default function Campeoes() {
                             </div>
                         </div>
 
-
-                        {/* Grid de campeões */}
-                        <div className="grid grid-cols-8 gap-4 p-6 bg-gray-700 border border-[#17313A] rounded max-h-[700px] overflow-y-auto w-full">
+                        {/* Grid campeões com overflow para telas pequenas */}
+                        <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 p-4 bg-gray-700 border border-[#17313A] rounded max-h-[350px] sm:max-h-[450px] md:max-h-[600px] overflow-y-auto w-full min-w-0">
                             {filteredChampions.length === 0 ? (
-                                <p className="col-span-8 text-center text-[#A09B8C] text-lg w-full max-w-[400px] mx-auto">
+                                <p className="col-span-full text-center text-[#A09B8C] text-lg max-w-[400px] mx-auto">
                                     Nenhum campeão disponível.
                                 </p>
                             ) : (
@@ -169,6 +170,7 @@ export default function Campeoes() {
                                         className={`p-2 rounded hover:ring-4 ring-emerald-500 flex flex-col items-center ${selectedChampion === champ.id ? "ring-6 ring-emerald-400" : ""
                                             }`}
                                         aria-label={`Selecionar campeão ${champ.displayName}`}
+                                        type="button"
                                     >
                                         <div className="w-14 h-14 rounded overflow-hidden border border-[#785A28] flex items-center justify-center bg-[#1E2328]">
                                             <img
@@ -177,22 +179,22 @@ export default function Campeoes() {
                                                 className="max-w-full max-h-full object-contain"
                                             />
                                         </div>
-                                        <p className="text-sm text-center mt-2 truncate">{champ.displayName}</p>
+                                        <p className="text-sm text-center mt-2 truncate max-w-full">{champ.displayName}</p>
                                     </button>
                                 ))
                             )}
                         </div>
                     </div>
 
-                    {/* Inimigos */}
-                    <div className="w-56 flex flex-col items-center text-lg">
+                    {/* INIMIGOS */}
+                    <div className="w-full md:w-56 flex flex-col items-center text-lg flex-shrink-0 overflow-auto max-h-[280px] md:max-h-none">
                         <h3 className="text-[#F0E6D2] text-base uppercase mb-3">Inimigos</h3>
                         {[...Array(5)].map((_, i) => {
                             const isFirst = i === 0 && matchupData;
                             return (
                                 <div
                                     key={i}
-                                    className="flex items-center w-full my-3 p-3 rounded relative border-t border-[#C8AA6E]/50"
+                                    className="flex items-center w-full my-2 p-3 rounded relative border-t border-[#C8AA6E]/50"
                                 >
                                     <div className="w-12 h-12 rounded-full overflow-hidden border-2 border-[#FF4444] mr-3 flex items-center justify-center bg-[#1E2328]">
                                         {isFirst && (
@@ -211,13 +213,13 @@ export default function Campeoes() {
                                             <span className="text-xs text-[#A09B8C] mt-1">Escolhendo...</span>
                                         )}
                                     </div>
-
                                 </div>
                             );
                         })}
                     </div>
                 </div>
             </div>
+
 
             {/* LADO DIREITO: Painel de Build/Runas */}
             <aside className="w-[550px] bg-zinc-900 border-l border-zinc-700 p-6 overflow-y-auto h-screen">
