@@ -18,10 +18,9 @@ export default function Home({ onStart }) {
       animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
       exit={{ opacity: 0, scale: 0.98, filter: "blur(8px)" }}
       transition={{ duration: 0.6, ease: "easeInOut" }}
-      className="min-h-screen flex flex-col items-center justify-center px-4 text-center text-white relative"
+      className="w-full h-full flex flex-col items-center justify-center px-4 text-center text-white relative"
     >
-      {/* Título animado */}
-      <div className="w-full max-w-4xl h-[200px] mx-auto flex items-center justify-center mb-12">
+      <div className="w-full max-w-4xl h-[200px] flex items-center justify-center mb-12">
         <TextPressure
           text="Mono Zac Guia"
           flex
@@ -36,7 +35,6 @@ export default function Home({ onStart }) {
         />
       </div>
 
-      {/* Botão entrar */}
       <motion.button
         whileHover={{ scale: 1.07, boxShadow: "0 0 15px #34d399" }}
         whileTap={{ scale: 0.95 }}
@@ -51,11 +49,9 @@ export default function Home({ onStart }) {
           flex items-center gap-3
         "
       >
-        Entrar
-        <FaSignInAlt size={20} />
+        Entrar <FaSignInAlt size={20} />
       </motion.button>
 
-      {/* Botões GitHub + Twitch */}
       <div className="flex gap-6 justify-center mb-8">
         <motion.a
           href="https://github.com/Eduardo-Virissimo/zac-guide-data-dragon"
@@ -80,10 +76,7 @@ export default function Home({ onStart }) {
         </motion.a>
       </div>
 
-      {/* Versão fixa no canto inferior esquerdo */}
-      <p className="fixed bottom-4 left-4 text-gray-500 text-sm select-none">
-        v1.0.0
-      </p>
+      <p className="fixed bottom-4 left-4 text-gray-500 text-sm select-none">v1.0.0</p>
     </motion.div>
   );
 }

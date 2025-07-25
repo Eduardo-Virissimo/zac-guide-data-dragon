@@ -14,33 +14,25 @@ const laneIcons = {
 
 export default function LaneSelector({ lanes, selectedLane, onSelectLane }) {
   return (
-    <nav
-      aria-label="Selecionar lane"
-      className="flex justify-center gap-6 mb-12 flex-wrap"
-    >
+    <div className="flex flex-wrap gap-3">
       {lanes.map((lane) => (
         <button
           key={lane}
           type="button"
           onClick={() => onSelectLane(lane)}
-          className={`flex items-center gap-3 px-6 py-3 rounded-full text-base font-bold uppercase transition shadow-md
-            focus:outline-none focus:ring-2 focus:ring-emerald-400
+          className={`flex items-center gap-2 px-4 py-2 rounded border transition-all duration-200 text-sm font-semibold uppercase
             ${
               selectedLane === lane
-                ? "bg-emerald-500 text-white shadow-xl scale-105"
-                : "bg-zinc-800 text-gray-300 hover:bg-zinc-700 hover:text-white"
+                ? "bg-[#1E2328] border-emerald-500 text-[#F0E6D2] ring-2 ring-emerald-500"
+                : "bg-[#1E2328] border-[#785A28] text-[#C8AA6E] hover:bg-[#2A2E35] hover:text-[#F0E6D2]"
             }
           `}
           aria-pressed={selectedLane === lane}
         >
-          <img
-            src={laneIcons[lane]}
-            alt={`${lane} icon`}
-            className="w-7 h-7"
-          />
+          <img src={laneIcons[lane]} alt={`${lane} icon`} className="w-5 h-5" />
           {lane.charAt(0).toUpperCase() + lane.slice(1)}
         </button>
       ))}
-    </nav>
+    </div>
   );
 }
